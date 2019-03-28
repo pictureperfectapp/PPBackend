@@ -19,8 +19,8 @@ import com.amazonaws.services.s3.model.S3Object;
 public class PictureService {
 
 	// Credentials of S3 Buckets
-	private AWSCredentials credentials = new BasicAWSCredentials("AKIAIPUALAJFL5YXAQTA",
-			"cWAlPG1Hm5cQkiFQTZgPDOS0qmETJ86K8UEeiv6N");
+	private AWSCredentials credentials = new BasicAWSCredentials("xxx,
+			"yyy");
 
 	private AmazonS3 s3client = AmazonS3ClientBuilder.standard()
 			.withCredentials(new AWSStaticCredentialsProvider(credentials)).withRegion(Regions.US_EAST_2).build();
