@@ -1,12 +1,11 @@
 package com.revature.repositories;
 
-import java.util.List;
 
 import org.springframework.stereotype.Repository;
-
+import org.springframework.data.jpa.repository.JpaRepository;
 import com.revature.models.Game;
 
 @Repository
-public class GameRepository extends JpaRepository<Game, Integer>{
+public interface GameRepository extends JpaRepository<Game, Integer>{
 
 }
