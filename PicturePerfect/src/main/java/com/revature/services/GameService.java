@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.revature.models.Game;
 
-public interface GameDao{
+public interface GameService{
 	public List<Game> getAllGames();
 	public Game getGameById(int id);
 	public Game createGame(Game game);

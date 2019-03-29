@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.revature.models.User;
 
-public interface UserDao {
+public interface UserService {
 	public List<User> getAllUsers();
 	public User getUserById(int id);
 	public User createUser(User user);
