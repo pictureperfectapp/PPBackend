@@ -1,6 +1,13 @@
 package com.revature.beans;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "USERS")
 public class User {
+	@Id
 	private Integer u_id;
 	private String username;
 	private String password;

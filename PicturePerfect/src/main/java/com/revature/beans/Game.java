@@ -1,62 +1,92 @@
 package com.revature.beans;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "GAMES")
 public class Game {
+	@Id
 	private Integer g_id;
 	private String word;
-	private Object picture;
+	private String picture;
 	private String guess;
-	private Integer turn_id;
+	
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(
+			name = "USERS_GAMES",
+			joinColumns = {@JoinColumn(name ="g_id")},
+			inverseJoinColumns = {@JoinColumn(name = "u_id")})
+	private List<User> users = new ArrayList<>();
+
 	public Game() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Game(Integer g_id, String word, Object picture, String guess, Integer turn_id) {
+
+	public Game(Integer g_id, String word, String picture, String guess, List<User> users) {
 		super();
 		this.g_id = g_id;
 		this.word = word;
 		this.picture = picture;
 		this.guess = guess;
-		this.turn_id = turn_id;
+		this.users = users;
 	}
-	public Game(Integer g_id) {
-		super();
-		this.g_id = g_id;
-	}
+
 	public Integer getG_id() {
 		return g_id;
 	}
+
 	public void setG_id(Integer g_id) {
 		this.g_id = g_id;
 	}
+
 	public String getWord() {
 		return word;
 	}
+
 	public void setWord(String word) {
 		this.word = word;
 	}
-	public Object getPicture() {
+
+	public String getPicture() {
 		return picture;
 	}
-	public void setPicture(Object picture) {
+
+	public void setPicture(String picture) {
 		this.picture = picture;
 	}
+
 	public String getGuess() {
 		return guess;
 	}
+
 	public void setGuess(String guess) {
 		this.guess = guess;
 	}
-	public Integer getTurn_id() {
-		return turn_id;
+
+	public List<User> getUsers() {
+		return users;
 	}
-	public void setTurn_id(Integer turn_id) {
-		this.turn_id = turn_id;
+
+	public void setUsers(List<User> users) {
+		this.users = users;
 	}
+
 	@Override
 	public String toString() {
-		return "Game [g_id=" + g_id + ", word=" + word + ", picture=" + picture + ", guess=" + guess + ", turn_id="
-				+ turn_id + "]";
+		return "Game [g_id=" + g_id + ", word=" + word + ", picture=" + picture + ", guess=" + guess + ", users="
+				+ users + "]";
 	}
+	
 	
 	
 }
