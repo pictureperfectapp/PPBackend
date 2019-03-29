@@ -1,28 +1,31 @@
 package com.revature.beans;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+
+@Entity
 public class Metrics {
+	@Id
 	private Integer m_id;
-	private Integer u_id;
+	@OneToOne
+	private User user;
 	private Integer points;
 	private Integer gamesPlayed;
 	private Integer wins;
 	
 	public Metrics() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
 
-	public Metrics(Integer m_id, Integer u_id, Integer points, Integer gamesPlayed, Integer wins) {
+	public Metrics(Integer m_id, User user, Integer points, Integer gamesPlayed, Integer wins) {
 		super();
 		this.m_id = m_id;
-		this.u_id = u_id;
+		this.user = user;
 		this.points = points;
 		this.gamesPlayed = gamesPlayed;
 		this.wins = wins;
-	}
-
-	public Metrics(Integer u_id) {
-		super();
-		this.u_id = u_id;
 	}
 
 	public Integer getM_id() {
@@ -33,22 +36,16 @@ public class Metrics {
 		this.m_id = m_id;
 	}
 
-	public Integer getU_id() {
-		return u_id;
+	public User getUser() {
+		return user;
 	}
 
-	public void setU_id(Integer u_id) {
-		this.u_id = u_id;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public Integer getPoints() {
 		return points;
-	}
-
-	@Override
-	public String toString() {
-		return "Metrics [m_id=" + m_id + ", u_id=" + u_id + ", points=" + points + ", gamesPlayed=" + gamesPlayed
-				+ ", wins=" + wins + "]";
 	}
 
 	public void setPoints(Integer points) {
@@ -69,6 +66,12 @@ public class Metrics {
 
 	public void setWins(Integer wins) {
 		this.wins = wins;
+	}
+
+	@Override
+	public String toString() {
+		return "Metrics [m_id=" + m_id + ", user=" + user + ", points=" + points + ", gamesPlayed=" + gamesPlayed
+				+ ", wins=" + wins + "]";
 	}
 	
 	
