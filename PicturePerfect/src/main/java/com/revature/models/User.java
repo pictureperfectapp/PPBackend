@@ -16,9 +16,9 @@ public class User {
 	private Integer points;
 	private Integer gamesPlayed;
 	private Integer wins;
+	
 	public User() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	
 	public User(Integer u_id, String username, String password, String email, String admin, Integer points,

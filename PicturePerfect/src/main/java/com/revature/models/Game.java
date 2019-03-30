@@ -29,7 +29,6 @@ public class Game {
 
 	public Game() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Game(Integer g_id, String word, String picture, String guess, List<User> users) {
