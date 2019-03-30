@@ -2,38 +2,45 @@ package com.revature.services;
 
 import java.util.List;
 
-import com.revature.models.Game;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import com.revature.models.Game;
+import com.revature.repositories.GameRepository;
+
+@Service
 public class GameServiceImpl implements GameService{
 
+	@Autowired
+	GameRepository gameRepository;
+	
 	@Override
-	public List<Game> getAllGames() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Game> findAllGames() {
+		
+		return gameRepository.findAll();
 	}
 
 	@Override
-	public Game getGameById(int id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Game findGameById(int id) {
+		return gameRepository.getOne(id);
 	}
 
 	@Override
-	public Game createGame(Game game) {
-		// TODO Auto-generated method stub
-		return null;
+	public Game addGame(Game game) {
+		return gameRepository.save(game);
 	}
 
 	@Override
 	public Game updateGame(Game game) {
-		// TODO Auto-generated method stub
-		return null;
+		return gameRepository.save(game);
 	}
 
 	@Override
-	public void deleteGame(Game game) {
-		// TODO Auto-generated method stub
-		
+	public Game deleteGame(Game game) {
+		gameRepository.delete(game);
+		return game;
 	}
+
+
 
 }
