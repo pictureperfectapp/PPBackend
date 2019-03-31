@@ -57,7 +57,6 @@ public class ImageUtil {
 	}
 
 	public static Map<String, String> convertS3ObjectToJson(S3Object s3Object) {
-
 		int count;
 		byte[] buf = new byte[1024];
 		Map<String, String> jsonMap = new HashMap<>();
@@ -73,7 +72,6 @@ public class ImageUtil {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-		
 		return jsonMap;
 	}
 	
