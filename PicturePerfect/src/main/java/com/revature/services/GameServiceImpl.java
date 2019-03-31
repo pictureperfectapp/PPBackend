@@ -16,7 +16,6 @@ public class GameServiceImpl implements GameService{
 	
 	@Override
 	public List<Game> findAllGames() {
-		
 		return gameRepository.findAll();
 	}
 
@@ -32,6 +31,7 @@ public class GameServiceImpl implements GameService{
 
 	@Override
 	public Game updateGame(Game game) {
+		game.setTurn(game.getTurn()+1);
 		return gameRepository.save(game);
 	}
 
