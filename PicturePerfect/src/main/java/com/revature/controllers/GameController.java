@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,21 +16,21 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.revature.models.Game;
 import com.revature.services.GameService;
 
 //Allows access from all origins/ports || Removes CORS policy when trying to access from Angular (port 4200)
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-@Controller
+@RestController
 @RequestMapping("/games")
 public class GameController {
 	@Autowired
 	GameService gameService;
 	
 	@GetMapping(produces=MediaType.APPLICATION_JSON_VALUE)
-	public List<Game> findAllGames(){
-		return gameService.findAllGames();
+	public List<Game> findAllGames(){		return gameService.findAllGames();
 	}
 	
 	@GetMapping(value = "/{id}", produces=MediaType.APPLICATION_JSON_VALUE)

@@ -16,6 +16,7 @@ public class UserServiceImpl implements UserService{
     }
     @Override
     public User getUserById(int id) {
+    	System.out.println("Get by ID  Service: "+id);
         return userRepository.getOne(id);
         
     }
