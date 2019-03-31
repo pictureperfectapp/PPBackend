@@ -31,8 +31,6 @@ public class GameController {
 	
 	@GetMapping(produces=MediaType.APPLICATION_JSON_VALUE)
 	public List<Game> findAllGames(){
-		
-		
 		return gameService.findAllGames();
 	}
 	
