@@ -29,6 +29,7 @@ public class UserController {
     @Autowired
     UserService userService; 
     
+    
     @GetMapping(value="/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
     public User findUserById(@PathVariable("id") Integer id) {
         return userService.getUserById(id);

@@ -8,7 +8,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 public class EmailUtil {
-	public static void sendEmail(String address) throws Exception {
+	public static void sendEmail(String address, String message) throws Exception {
 
 		final String FROM = "achumchal@gmail.com";
 		final String FROMNAME = "Aaron Chumchal";
@@ -21,7 +21,7 @@ public class EmailUtil {
 		final String SUBJECT = "Amazon SES test (SMTP interface accessed using Java)";
 
 		final String BODY = String.join(System.getProperty("line.separator"), "<h1>Picture Perfect</h1>",
-				"<p>It is your turn to play!</p>");
+				"<p>" + message + "</p>");
 
 		Properties props = System.getProperties();
 		props.put("mail.transport.protocol", "smtp");
