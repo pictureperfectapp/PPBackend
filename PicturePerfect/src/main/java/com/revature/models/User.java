@@ -4,6 +4,12 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+<<<<<<< HEAD
+=======
+import org.springframework.stereotype.Component;
+
+@Component
+>>>>>>> 84fc4a19d8f0240e15b8bdf7c7a901754be61324
 @Entity
 @Table(name = "USERS")
 public class User {
