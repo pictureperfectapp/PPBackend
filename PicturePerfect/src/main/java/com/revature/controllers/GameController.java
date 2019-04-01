@@ -39,6 +39,11 @@ public class GameController {
 		return gameService.findGameById(id);
 	}
 	
+	@GetMapping(value = "/{id}/{turn}", produces=MediaType.APPLICATION_JSON_VALUE)
+	public List<Game> findGameByResume(@PathVariable("id") Integer id, @PathVariable("turn") Integer turn) {
+		return gameService.findGameByUserId(id);
+	}
+	
 	@PostMapping(consumes=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Game> addGame(@Valid @RequestBody Game game){
 		return new ResponseEntity<Game>(gameService.addGame(game), HttpStatus.CREATED);
