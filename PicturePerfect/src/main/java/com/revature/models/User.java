@@ -31,11 +31,11 @@ public class User {
 	public User() {
 		super();
 	}
-	
-	public User(Integer u_id, String username, String password, String email, String admin, Integer points,
+
+	public User(Integer uId, String username, String password, String email, String admin, Integer points,
 			Integer gamesPlayed, Integer wins) {
 		super();
-		this.uId = u_id;
+		this.uId = uId;
 		this.username = username;
 		this.password = password;
 		this.email = email;
@@ -43,6 +43,16 @@ public class User {
 		this.points = points;
 		this.gamesPlayed = gamesPlayed;
 		this.wins = wins;
+	}
+
+	public User(Integer uId) {
+		super();
+		this.uId = uId;
+	}
+
+	public User(String username) {
+		super();
+		this.username = username;
 	}
 
 	public User(String username, String password, String email, String admin, Integer points, Integer gamesPlayed,
@@ -57,22 +67,12 @@ public class User {
 		this.wins = wins;
 	}
 
-	public User(Integer u_id) {
-		super();
-		this.uId = u_id;
-	}
-
-	public User(String username) {
-		super();
-		this.username = username;
-	}
-
-	public Integer getU_id() {
+	public Integer getuId() {
 		return uId;
 	}
 
-	public void setU_id(Integer u_id) {
-		this.uId = u_id;
+	public void setuId(Integer uId) {
+		this.uId = uId;
 	}
 
 	public String getUsername() {
@@ -133,7 +133,7 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [u_id=" + uId + ", username=" + username + ", password=" + password + ", email=" + email
+		return "User [uId=" + uId + ", username=" + username + ", password=" + password + ", email=" + email
 				+ ", admin=" + admin + ", points=" + points + ", gamesPlayed=" + gamesPlayed + ", wins=" + wins + "]";
 	}
 
@@ -203,5 +203,6 @@ public class User {
 			return false;
 		return true;
 	}
+	
 	
 }
