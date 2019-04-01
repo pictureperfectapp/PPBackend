@@ -17,12 +17,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.revature.models.User;
 import com.revature.services.UserService;
 //Allows access from all origins/ports || Removes CORS policy when trying to access from Angular (port 4200)
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-@Controller
+@RestController
 @RequestMapping("/users")
 public class UserController {
     
