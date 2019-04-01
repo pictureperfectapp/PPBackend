@@ -1,5 +1,6 @@
 package com.revature.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,18 @@ public class GameServiceImpl implements GameService{
 	public Game deleteGame(Game game) {
 		gameRepository.delete(game);
 		return game;
+	}
+
+	@Override
+	public List<Game> findGameByUserId(Integer id){
+		List<Game> allGames = gameRepository.findByUsers_uId(id);
+		List<Game> resumable = new ArrayList<Game>();
+		for(Game g : allGames) {
+			if(g.getTurn() == 2) {
+				resumable.add(g);
+			}
+		}
+		return resumable;
 	}
 
 
