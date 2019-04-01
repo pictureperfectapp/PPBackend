@@ -1,5 +1,6 @@
 package com.revature.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -16,10 +17,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.revature.models.Game;
+import com.revature.models.User;
 import com.revature.services.GameService;
+import com.revature.services.UserService;
 
 //Allows access from all origins/ports || Removes CORS policy when trying to access from Angular (port 4200)
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -28,6 +32,8 @@ import com.revature.services.GameService;
 public class GameController {
 	@Autowired
 	GameService gameService;
+	@Autowired
+	UserService userService;
 	
 	@GetMapping(produces=MediaType.APPLICATION_JSON_VALUE)
 	public List<Game> findAllGames(){
@@ -39,13 +45,17 @@ public class GameController {
 		return gameService.findGameById(id);
 	}
 	
-	@GetMapping(value = "/{resume}", produces=MediaType.APPLICATION_JSON_VALUE)
-	public List<Game> findGameByResume(@PathVariable("resume") Integer id) {
+	@GetMapping(value = "/{resume}/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
+	public List<Game> findGameByResume(@PathVariable("resume") String resume, @PathVariable("id") Integer id) {
 		return gameService.findGameByUserId(id);
 	}
 	
 	@PostMapping(consumes=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Game> addGame(@Valid @RequestBody Game game){
+	public ResponseEntity<Game> addGame(@RequestParam("id") Integer id, @RequestParam("username")String username, @Valid @RequestBody Game game){
+		List<User> userList = new ArrayList<User>();
+		userList.add(userService.getUserById(id));
+		userList.add(userService.getUserByUsername(username));
+		game.setUsers(userList);
 		return new ResponseEntity<Game>(gameService.addGame(game), HttpStatus.CREATED);
 	}
 	
