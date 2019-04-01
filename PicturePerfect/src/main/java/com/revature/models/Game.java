@@ -36,7 +36,7 @@ public class Game {
 	@JoinTable(
 			name = "USERS_GAMES",
 			joinColumns = {@JoinColumn(name ="g_id")},
-			inverseJoinColumns = {@JoinColumn(name = "u_id")})
+			inverseJoinColumns = {@JoinColumn(name = "uId")})
 	private List<User> users = new ArrayList<>();
 
 	public Game() {
