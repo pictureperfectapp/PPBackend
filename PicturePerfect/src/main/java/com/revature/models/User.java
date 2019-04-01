@@ -1,7 +1,11 @@
 package com.revature.models;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
@@ -11,6 +15,10 @@ import org.springframework.stereotype.Component;
 @Table(name = "USERS")
 public class User {
 	@Id
+	@Column(name="u_id")
+	@SequenceGenerator(sequenceName="user_seq", name="u_seq")
+	@GeneratedValue(generator="u_seq", strategy=GenerationType
+	.SEQUENCE)
 	private Integer u_id;
 	private String username;
 	private String password;
@@ -28,6 +36,18 @@ public class User {
 			Integer gamesPlayed, Integer wins) {
 		super();
 		this.u_id = u_id;
+		this.username = username;
+		this.password = password;
+		this.email = email;
+		this.admin = admin;
+		this.points = points;
+		this.gamesPlayed = gamesPlayed;
+		this.wins = wins;
+	}
+
+	public User(String username, String password, String email, String admin, Integer points, Integer gamesPlayed,
+			Integer wins) {
+		super();
 		this.username = username;
 		this.password = password;
 		this.email = email;
@@ -183,10 +203,5 @@ public class User {
 			return false;
 		return true;
 	}
-	
-	
-	
-	
-	
 	
 }
