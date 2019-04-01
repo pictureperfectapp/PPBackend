@@ -3,12 +3,16 @@ package com.revature.models;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
@@ -18,6 +22,10 @@ import org.springframework.stereotype.Component;
 @Table(name = "GAMES")
 public class Game {
 	@Id
+	@Column(name="g_id")
+	@SequenceGenerator(sequenceName="game_seq", name="g_seq")
+	@GeneratedValue(generator="g_seq", strategy=GenerationType
+	.SEQUENCE)
 	private Integer g_id;
 	private String word;
 	private String picture;
@@ -28,7 +36,7 @@ public class Game {
 	@JoinTable(
 			name = "USERS_GAMES",
 			joinColumns = {@JoinColumn(name ="g_id")},
-			inverseJoinColumns = {@JoinColumn(name = "u_id")})
+			inverseJoinColumns = {@JoinColumn(name = "uId")})
 	private List<User> users = new ArrayList<>();
 
 	public Game() {
@@ -38,6 +46,15 @@ public class Game {
 	public Game(Integer g_id, String word, String picture, String guess, int turn, List<User> users) {
 		super();
 		this.g_id = g_id;
+		this.word = word;
+		this.picture = picture;
+		this.guess = guess;
+		this.turn = turn;
+		this.users = users;
+	}
+	
+	public Game(String word, String picture, String guess, int turn, List<User> users) {
+		super();
 		this.word = word;
 		this.picture = picture;
 		this.guess = guess;

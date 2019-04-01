@@ -34,4 +34,23 @@ public class UserServiceImpl implements UserService{
         // TODO Auto-generated method stub
         
     }
+	@Override
+	public User getUserByUsername(String username) {
+		return userRepository.findUserByUsername(username);
+	}
+	
+	@Override
+	public User login(String username, String password) {
+		User temp = new User();
+		User retrievedUser = this.getUserByUsername(username);
+		if(retrievedUser != null && retrievedUser.getPassword().equals(password)) {
+			temp.setuId(retrievedUser.getuId());
+			temp.setUsername(username);
+			temp.setEmail(retrievedUser.getEmail());
+			temp.setGamesPlayed(retrievedUser.getGamesPlayed());
+			temp.setPoints(retrievedUser.getPoints());
+			temp.setWins(retrievedUser.getWins());
+		}
+		return temp;
+	}
 }
