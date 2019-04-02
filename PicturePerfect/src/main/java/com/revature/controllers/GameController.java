@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.revature.models.Game;
@@ -36,8 +35,7 @@ public class GameController {
 	UserService userService;
 	
 	@GetMapping(produces=MediaType.APPLICATION_JSON_VALUE)
-	public List<Game> findAllGames(){
-		return gameService.findAllGames();
+	public List<Game> findAllGames(){		return gameService.findAllGames();
 	}
 	
 	@GetMapping(value = "/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
@@ -47,15 +45,25 @@ public class GameController {
 	
 	@GetMapping(value = "/{resume}/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
 	public List<Game> findGameByResume(@PathVariable("resume") String resume, @PathVariable("id") Integer id) {
-		return gameService.findGameByUserId(id);
+		return gameService.findGamesByTurn(id);
 	}
 	
 	@PostMapping(consumes=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Game> addGame(@RequestParam("id") Integer id, @RequestParam("username")String username, @Valid @RequestBody Game game){
-		List<User> userList = new ArrayList<User>();
-		userList.add(userService.getUserById(id));
-		userList.add(userService.getUserByUsername(username));
-		game.setUsers(userList);
+	public ResponseEntity<Game> addGame(@Valid @RequestBody Game game){
+		List<User> users = userService.getAllUsers();
+		List<User> filledList = new ArrayList<>();
+		for(User u : game.getUsers()) {
+			for(User us : users) {
+				if(u.getuId() != null && u.getuId().equals(us.getuId())) {
+					filledList.add(us);
+				}
+				if(u.getUsername() != null && u.getUsername().equals(us.getUsername())) {
+					filledList.add(us);
+					game.setTurn(us.getuId());
+				}
+			}
+		}
+		game.setUsers(filledList);
 		return new ResponseEntity<Game>(gameService.addGame(game), HttpStatus.CREATED);
 	}
 	

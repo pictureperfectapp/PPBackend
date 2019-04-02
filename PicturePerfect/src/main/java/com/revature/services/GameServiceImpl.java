@@ -33,18 +33,20 @@ public class GameServiceImpl implements GameService{
 	@Override
 	public Game addGame(Game game) {
 		List<User> users = game.getUsers();
+		
 		try {
 			EmailUtil.sendEmail(users.get(1).getEmail(), "You Recieved an Image to Guess from : " + users.get(0).getUsername());
 		} catch (Exception e) {
 			System.out.println("Email not valid or can not be reached");
 		}
 		game.setGuess("NEED TO GUESS");
-		game.setTurn(1);
+//		game.setTurn(1);
 		return gameRepository.save(game);
 	}
 
 	@Override
 	public Game updateGame(Game game) {
+		//Update turns
 		game.setTurn(game.getTurn() + 1);
 		List<User> users = game.getUsers();
 		if(game.getTurn() == 2) {	
@@ -70,15 +72,15 @@ public class GameServiceImpl implements GameService{
 	}
 
 	@Override
-	public List<Game> findGameByUserId(Integer id){
-		List<Game> allGames = gameRepository.findByUsers_uId(id);
-		List<Game> resumable = new ArrayList<Game>();
-		for(Game g : allGames) {
-			if(g.getTurn() == 2) {
-				resumable.add(g);
-			}
-		}
-		return resumable;
+	public List<Game> findGamesByTurn(Integer id){
+		List<Game> allGames = gameRepository.findGamesByTurn(id);
+//		List<Game> resumable = new ArrayList<Game>();
+//		for(Game g : allGames) {
+//			if(g.getTurn() == 2) {
+//				resumable.add(g);
+//			}
+//		}
+		return allGames;
 	}
 
 
