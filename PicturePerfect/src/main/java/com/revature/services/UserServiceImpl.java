@@ -45,6 +45,7 @@ public class UserServiceImpl implements UserService{
 		User retrievedUser = this.getUserByUsername(username);
 		if(retrievedUser != null && retrievedUser.getPassword().equals(password)) {
 			temp.setuId(retrievedUser.getuId());
+
 			temp.setUsername(username);
 			temp.setEmail(retrievedUser.getEmail());
 			temp.setGamesPlayed(retrievedUser.getGamesPlayed());
