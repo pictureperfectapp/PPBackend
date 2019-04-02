@@ -33,6 +33,7 @@ public class GameServiceImpl implements GameService{
 	@Override
 	public Game addGame(Game game) {
 		List<User> users = game.getUsers();
+		
 		try {
 			EmailUtil.sendEmail(users.get(1).getEmail(), "You Recieved an Image to Guess from : " + users.get(0).getUsername());
 		} catch (Exception e) {

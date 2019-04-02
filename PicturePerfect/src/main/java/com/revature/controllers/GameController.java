@@ -54,9 +54,10 @@ public class GameController {
 		List<User> filledList = new ArrayList<>();
 		for(User u : game.getUsers()) {
 			for(User us : users) {
-				if(u.getuId() != null && u.getuId() == us.getuId()) {
+				if(u.getuId() != null && u.getuId().equals(us.getuId())) {
 					filledList.add(us);
-				}else if(u.getUsername() != null && u.getUsername().equals(us.getUsername())) {
+				}
+				if(u.getUsername() != null && u.getUsername().equals(us.getUsername())) {
 					filledList.add(us);
 				}
 			}
