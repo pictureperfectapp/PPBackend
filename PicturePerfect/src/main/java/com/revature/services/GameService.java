@@ -6,7 +6,8 @@ import com.revature.models.Game;
 
 public interface GameService{
 	public List<Game> findAllGames();
-	public Game findGameById(int id);
+	public List<Game> findGameByUserId(Integer id);
+	public Game findGameById(Integer id);
 	public Game addGame(Game game);
 	public Game updateGame(Game game);
 	public Game deleteGame(Game game);
