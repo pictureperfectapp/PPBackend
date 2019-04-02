@@ -45,7 +45,7 @@ public class GameController {
 	
 	@GetMapping(value = "/{resume}/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
 	public List<Game> findGameByResume(@PathVariable("resume") String resume, @PathVariable("id") Integer id) {
-		return gameService.findGameByUserId(id);
+		return gameService.findGamesByTurn(id);
 	}
 	
 	@PostMapping(consumes=MediaType.APPLICATION_JSON_VALUE)
@@ -54,10 +54,12 @@ public class GameController {
 		List<User> filledList = new ArrayList<>();
 		for(User u : game.getUsers()) {
 			for(User us : users) {
-				if(u.getuId() != null && u.getuId() == us.getuId()) {
+				if(u.getuId() != null && u.getuId().equals(us.getuId())) {
 					filledList.add(us);
-				}else if(u.getUsername() != null && u.getUsername().equals(us.getUsername())) {
+				}
+				if(u.getUsername() != null && u.getUsername().equals(us.getUsername())) {
 					filledList.add(us);
+					game.setTurn(us.getuId());
 				}
 			}
 		}
