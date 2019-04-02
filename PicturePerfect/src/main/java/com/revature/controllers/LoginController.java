@@ -1,4 +1,3 @@
-
 package com.revature.controllers;
 
 import javax.validation.Valid;
@@ -32,4 +31,8 @@ public class LoginController {
 			return new ResponseEntity<>(temp, HttpStatus.ACCEPTED);
 		}
 	}
+
 }
+
+
+
