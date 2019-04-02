@@ -1,12 +1,8 @@
 Manifest-Version: 1.0
-<<<<<<< HEAD
-Built-By: Kevin
-=======
 Implementation-Title: PicturePerfect
 Implementation-Version: 0.0.1-SNAPSHOT
 Built-By: djbog
 Implementation-Vendor-Id: com.revature
->>>>>>> 2f6c6ba2f2cf55279725635cc6cfadbd999c81ec
 Build-Jdk: 1.8.0_201
 Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
  ot-starter-parent/PicturePerfect
