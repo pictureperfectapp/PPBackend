@@ -39,19 +39,13 @@ public class UserServiceImpl implements UserService{
 		return userRepository.findUserByUsername(username);
 	}
 	
-<<<<<<< HEAD
-=======
 	@Override
->>>>>>> PPBackDev
 	public User login(String username, String password) {
 		User temp = new User();
 		User retrievedUser = this.getUserByUsername(username);
 		if(retrievedUser != null && retrievedUser.getPassword().equals(password)) {
-<<<<<<< HEAD
-			temp.setU_id(retrievedUser.getU_id());
-=======
 			temp.setuId(retrievedUser.getuId());
->>>>>>> PPBackDev
+
 			temp.setUsername(username);
 			temp.setEmail(retrievedUser.getEmail());
 			temp.setGamesPlayed(retrievedUser.getGamesPlayed());

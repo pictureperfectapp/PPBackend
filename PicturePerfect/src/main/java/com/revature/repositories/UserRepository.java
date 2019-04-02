@@ -7,10 +7,7 @@ import com.revature.models.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer>{
-<<<<<<< HEAD
-	
-=======
->>>>>>> PPBackDev
+
 	public User findUserByUsername(String username);
 }
 
