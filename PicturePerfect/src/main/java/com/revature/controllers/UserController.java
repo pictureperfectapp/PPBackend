@@ -55,27 +55,32 @@ public class UserController {
 	@PutMapping("/{id}")
 	public ResponseEntity<User> updateUser(@PathVariable("id") Integer id, @Valid @RequestBody User user) {
 		List<User> users = userService.getAllUsers();
+		User temp= null;
 		for (User u : users) {
-			if (((u.getuId().equals(user.getuId()) == false) && u.getUsername().equalsIgnoreCase(user.getUsername())) || ((u.getuId().equals(user.getuId()) == false) && u.getEmail().equalsIgnoreCase(user.getEmail()))) {
+			if (((!u.getuId().equals(user.getuId())) && u.getUsername().equalsIgnoreCase(user.getUsername())) || ((!u.getuId().equals(user.getuId())) && u.getEmail().equalsIgnoreCase(user.getEmail()))) {
 				return new ResponseEntity<>(HttpStatus.CONFLICT);
 			}
-			if (u.getuId().equals(id)) {
-				user.setPoints(u.getPoints());
-				user.setWins(u.getWins());
-				user.setGamesPlayed(u.getGamesPlayed());
-				if (user.getEmail() == null || user.getEmail().equals("")) {
-					user.setEmail(u.getEmail());
-				}
-				if (user.getUsername() == null || user.getUsername().equals("")) {
-					user.setUsername(u.getUsername());
-				}
-				if (user.getPassword() == null || user.getPassword().equals("")) {
-					user.setPassword(u.getPassword());
-				}
-				return new ResponseEntity<>(userService.updateUser(user), HttpStatus.OK);
+			if(u.getuId().equals(id)) {
+				temp = u;
 			}
 		}
-		return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+		if (temp != null && temp.getuId().equals(id)) {
+			user.setPoints(temp.getPoints());
+			user.setWins(temp.getWins());
+			user.setGamesPlayed(temp.getGamesPlayed());
+			if (user.getEmail() == null || user.getEmail().equals("")) {
+				user.setEmail(temp.getEmail());
+			}
+			if (user.getUsername() == null || user.getUsername().equals("")) {
+				user.setUsername(temp.getUsername());
+			}
+			if (user.getPassword() == null || user.getPassword().equals("")) {
+				user.setPassword(temp.getPassword());
+			}
+			System.out.println(user);
+			return new ResponseEntity<>(userService.updateUser(user), HttpStatus.OK);
+		}
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 
 	@DeleteMapping("/{id}")
