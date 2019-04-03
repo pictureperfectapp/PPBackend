@@ -88,5 +88,10 @@ public class UserController {
 		User user = new User(id);
 		userService.deleteUser(user);
 	}
+	
+	@GetMapping(value = "/username/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public User findUserByUsername(@PathVariable("username") String username) {
+        return userService.getUserByUsername(username);
+    }
 
 }
