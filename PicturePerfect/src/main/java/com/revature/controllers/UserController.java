@@ -34,6 +34,11 @@ public class UserController {
 	public User findUserById(@PathVariable("id") Integer id) {
 		return userService.getUserById(id);
 	}
+	
+	@GetMapping(value = "/username/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public User findUserByUsername(@PathVariable("username") String username) {
+		return userService.getUserByUsername(username);
+	}
 
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<User> findUsers() {
