@@ -29,11 +29,8 @@ public class UserController {
     @Autowired
     UserService userService; 
     
-    
     @GetMapping(value="/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
     public User findUserById(@PathVariable("id") Integer id) {
-    	System.out.println(id);
-    	System.out.println("Hello");
         return userService.getUserById(id);
     }
     
@@ -46,10 +43,10 @@ public class UserController {
     public ResponseEntity<User> addUser(@Valid @RequestBody User user) {
         List<User> users = userService.getAllUsers();
         for(User u : users) {
-            if(u.getuId()==user.getuId()) {
+            if(u.getUsername() == user.getUsername()||u.getEmail()==user.getEmail()) {
                 // we can throw an exception indicating to the client that the id already exists
                 // or we can return a response entity with the appropriate response status
-                return new ResponseEntity<>(HttpStatus.CONFLICT);
+             return new ResponseEntity<>(HttpStatus.CONFLICT);  
             }
         }
         // we want to return a 201

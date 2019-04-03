@@ -21,7 +21,7 @@ public class EmailUtil {
 		final String SUBJECT = "Amazon SES test (SMTP interface accessed using Java)";
 
 		final String BODY = String.join(System.getProperty("line.separator"), "<h1>Picture Perfect</h1>",
-				"<p>" + message + "</p>");
+				"<p>" + message+ "</p>");
 
 		Properties props = System.getProperties();
 		props.put("mail.transport.protocol", "smtp");
