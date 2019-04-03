@@ -63,20 +63,27 @@ public class GameController {
 				}
 			}
 		}
+		if(filledList.size() < 2) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 		game.setUsers(filledList);
-		return new ResponseEntity<Game>(gameService.addGame(game), HttpStatus.CREATED);
+		return new ResponseEntity<>(gameService.addGame(game), HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/{id}")
 	public ResponseEntity<Game> updateGame(@PathVariable("id") Integer id, @Valid @RequestBody Game game){
-		List<Game> games = gameService.findAllGames();
-		for (Game g : games) {
-			if(g.getG_id() == id) {
-				game.setG_id(id);
-				return new ResponseEntity<>(gameService.updateGame(game), HttpStatus.OK);
-			}
+		Game temp = gameService.findGameById(id);
+		if(temp == null) {
+			return new ResponseEntity<Game>(HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<Game>(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(gameService.updateGame(game), HttpStatus.OK);
+//		for (Game g : games) {
+//			if(g.getG_id() == id) {
+//				game.setG_id(id);
+//				return new ResponseEntity<>(gameService.updateGame(game), HttpStatus.OK);
+//			}
+//		}
+//		return new ResponseEntity<Game>(HttpStatus.NOT_FOUND);
 	}
 	
 	@DeleteMapping("/{id}")
