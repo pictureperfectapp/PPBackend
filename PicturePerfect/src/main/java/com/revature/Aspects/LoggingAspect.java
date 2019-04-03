@@ -1,6 +1,4 @@
-package Aspects;
-
-
+package com.revature.Aspects;
 
 import org.apache.log4j.Logger;
 
@@ -15,7 +13,7 @@ import com.revature.models.User;
 
 @Aspect
 @Component
-public class LoggingAspects {
+public class LoggingAspect {
 	private static Logger log = Logger.getRootLogger();
 	
 	
