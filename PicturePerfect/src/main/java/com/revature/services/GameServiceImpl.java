@@ -1,6 +1,5 @@
 package com.revature.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,10 +32,9 @@ public class GameServiceImpl implements GameService {
 	@Override
 	public Game addGame(Game game) {
 		List<User> users = game.getUsers();
-
 		try {
 			EmailUtil.sendEmail(users.get(1).getEmail(),
-					"You Recieved an Image to Guess from : " + users.get(0).getUsername());
+					"You Received an Image to Guess from : " + users.get(0).getUsername());
 		} catch (Exception e) {
 			System.out.println("Email not valid or can not be reached");
 		}
@@ -46,23 +44,22 @@ public class GameServiceImpl implements GameService {
 
 	@Override
 	public Game updateGame(Game game) {
-		game.setTurn(-1);
+
 		List<User> users = game.getUsers();
-		if (game.getTurn() == -1) {
-			try {
-				EmailUtil.sendEmail(users.get(0).getEmail(), users.get(1).getUsername()
-						+ " has guessed, Checkout PicturePerfect to see if the guess is correct!");
-				for (User u : users) {
-					u.setGamesPlayed(u.getGamesPlayed() + 1);
-					if (game.getGuess().equals("correct")) {
-						u.setWins(u.getWins() + 1);
-					}
-					userRepository.save(u);
-				}
-			} catch (Exception e) {
-				System.out.println("Email is not valid or can not be reached");
+		for (User u : users) {
+			u.setGamesPlayed(u.getGamesPlayed() + 1);
+			if (game.getGuess().equals("correct")) {
+				u.setWins(u.getWins() + 1);
 			}
+			userRepository.save(u);
 		}
+		try {
+			EmailUtil.sendEmail(users.get(0).getEmail(), users.get(1).getUsername()
+					+ " has guessed, Checkout PicturePerfect to see if the guess is correct!");
+		} catch (Exception e) {
+			System.out.println("Email is not valid or can not be reached");
+		}
+		game.setTurn(-1);
 		return gameRepository.save(game);
 	}
 
@@ -74,14 +71,7 @@ public class GameServiceImpl implements GameService {
 
 	@Override
 	public List<Game> findGamesByTurn(Integer id) {
-		List<Game> allGames = gameRepository.findGamesByTurn(id);
-//		List<Game> resumable = new ArrayList<Game>();
-//		for(Game g : allGames) {
-//			if(g.getTurn() == 2) {
-//				resumable.add(g);
-//			}
-//		}
-		return allGames;
+		return gameRepository.findGamesByTurn(id);
 	}
 
 }

@@ -63,8 +63,11 @@ public class GameController {
 				}
 			}
 		}
+		if(filledList.size() < 2) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 		game.setUsers(filledList);
-		return new ResponseEntity<Game>(gameService.addGame(game), HttpStatus.CREATED);
+		return new ResponseEntity<>(gameService.addGame(game), HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/{id}")

@@ -24,6 +24,7 @@ public class UserServiceImpl implements UserService{
     	user.setGamesPlayed(0);
     	user.setPoints(0);
     	user.setWins(0);
+    	user.setAdmin("No");
         return userRepository.save(user);
     
     }
@@ -33,8 +34,7 @@ public class UserServiceImpl implements UserService{
     }
     @Override
     public void deleteUser(User user) {
-        // TODO Auto-generated method stub
-        
+    	//Not needed
     }
 	@Override
 	public User getUserByUsername(String username) {
@@ -47,7 +47,6 @@ public class UserServiceImpl implements UserService{
 		User retrievedUser = this.getUserByUsername(username);
 		if(retrievedUser != null && retrievedUser.getPassword().equals(password)) {
 			temp.setuId(retrievedUser.getuId());
-
 			temp.setUsername(username);
 			temp.setEmail(retrievedUser.getEmail());
 			temp.setGamesPlayed(retrievedUser.getGamesPlayed());
