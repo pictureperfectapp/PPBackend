@@ -45,7 +45,7 @@ public class GameController {
 	
 	@GetMapping(value = "/{resume}/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
 	public List<Game> findGameByResume(@PathVariable("resume") String resume, @PathVariable("id") Integer id) {
-		return gameService.findGameByUserId(id);
+		return gameService.findGamesByTurn(id);
 	}
 	
 	@PostMapping(consumes=MediaType.APPLICATION_JSON_VALUE)
@@ -54,27 +54,36 @@ public class GameController {
 		List<User> filledList = new ArrayList<>();
 		for(User u : game.getUsers()) {
 			for(User us : users) {
-				if(u.getuId() != null && u.getuId() == us.getuId()) {
+				if(u.getuId() != null && u.getuId().equals(us.getuId())) {
 					filledList.add(us);
-				}else if(u.getUsername() != null && u.getUsername().equals(us.getUsername())) {
+				}
+				if(u.getUsername() != null && u.getUsername().equals(us.getUsername())) {
 					filledList.add(us);
+					game.setTurn(us.getuId());
 				}
 			}
 		}
+		if(filledList.size() < 2) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 		game.setUsers(filledList);
-		return new ResponseEntity<Game>(gameService.addGame(game), HttpStatus.CREATED);
+		return new ResponseEntity<>(gameService.addGame(game), HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/{id}")
 	public ResponseEntity<Game> updateGame(@PathVariable("id") Integer id, @Valid @RequestBody Game game){
-		List<Game> games = gameService.findAllGames();
-		for (Game g : games) {
-			if(g.getG_id() == id) {
-				game.setG_id(id);
-				return new ResponseEntity<>(gameService.updateGame(game), HttpStatus.OK);
-			}
+		Game temp = gameService.findGameById(id);
+		if(temp == null) {
+			return new ResponseEntity<Game>(HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<Game>(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(gameService.updateGame(game), HttpStatus.OK);
+//		for (Game g : games) {
+//			if(g.getG_id() == id) {
+//				game.setG_id(id);
+//				return new ResponseEntity<>(gameService.updateGame(game), HttpStatus.OK);
+//			}
+//		}
+//		return new ResponseEntity<Game>(HttpStatus.NOT_FOUND);
 	}
 	
 	@DeleteMapping("/{id}")

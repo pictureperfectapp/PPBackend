@@ -1,6 +1,5 @@
 package com.revature.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +12,13 @@ import com.revature.repositories.UserRepository;
 import com.revature.util.EmailUtil;
 
 @Service
-public class GameServiceImpl implements GameService{
+public class GameServiceImpl implements GameService {
 
 	@Autowired
 	GameRepository gameRepository;
 	@Autowired
 	UserRepository userRepository;
-	
+
 	@Override
 	public List<Game> findAllGames() {
 		return gameRepository.findAll();
@@ -34,31 +33,40 @@ public class GameServiceImpl implements GameService{
 	public Game addGame(Game game) {
 		List<User> users = game.getUsers();
 		try {
-			EmailUtil.sendEmail(users.get(1).getEmail(), "You Recieved an Image to Guess from : " + users.get(0).getUsername());
+			EmailUtil.sendEmail(users.get(1).getEmail(),
+					"You Received an Image to Guess from : " + users.get(0).getUsername());
 		} catch (Exception e) {
 			System.out.println("Email not valid or can not be reached");
 		}
 		game.setGuess("NEED TO GUESS");
-		game.setTurn(1);
 		return gameRepository.save(game);
 	}
 
 	@Override
 	public Game updateGame(Game game) {
-		game.setTurn(game.getTurn() + 1);
+
 		List<User> users = game.getUsers();
-		if(game.getTurn() == 2) {	
-			try {
-				EmailUtil.sendEmail(users.get(0).getEmail(), users.get(1).getUsername() + " has guessed, Checkout PicturePerfect to see if the guess is correct!");
-				if(game.getGuess() == game.getWord()) {
-					for(User u : users) {
-						u.setWins(u.getWins()+1);
-						userRepository.save(u);
-					}
+		for (User u : users) {
+			u.setGamesPlayed(u.getGamesPlayed() + 1);
+			String[] guesses = game.getGuess().split(" ");
+			for (String g : guesses) {
+				if (g.equalsIgnoreCase(game.getWord())) {
+					u.setWins(u.getWins() + 1);
 				}
-			} catch (Exception e) {
-				System.out.println("Email is not valid or can not be reached");
+				userRepository.save(u);
 			}
+		}
+		try {
+			EmailUtil.sendEmail(users.get(0).getEmail(), users.get(1).getUsername()
+					+ " has guessed, Checkout PicturePerfect to see if the guess is correct!");
+		} catch (Exception e) {
+			System.out.println("Email is not valid or can not be reached");
+		}
+		if (((Integer) game.getTurn()).equals(game.getUsers().get(1).getuId())) {
+			game.setTurn(game.getUsers().get(0).getuId());
+			System.out.println("Game turn: " + game.getTurn());
+		} else {
+			game.setTurn(-1);
 		}
 		return gameRepository.save(game);
 	}
@@ -70,17 +78,8 @@ public class GameServiceImpl implements GameService{
 	}
 
 	@Override
-	public List<Game> findGameByUserId(Integer id){
-		List<Game> allGames = gameRepository.findByUsers_uId(id);
-		List<Game> resumable = new ArrayList<Game>();
-		for(Game g : allGames) {
-			if(g.getTurn() == 2) {
-				resumable.add(g);
-			}
-		}
-		return resumable;
+	public List<Game> findGamesByTurn(Integer id) {
+		return gameRepository.findGamesByTurn(id);
 	}
-
-
 
 }
