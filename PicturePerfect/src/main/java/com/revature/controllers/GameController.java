@@ -33,7 +33,7 @@ public class GameController {
 	GameService gameService;
 	@Autowired
 	UserService userService;
-	
+	//Accesses all Games from the Database
 	@GetMapping(produces=MediaType.APPLICATION_JSON_VALUE)
 	public List<Game> findAllGames(){		return gameService.findAllGames();
 	}
