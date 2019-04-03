@@ -46,16 +46,6 @@ public class GameServiceImpl implements GameService {
 	public Game updateGame(Game game) {
 
 		List<User> users = game.getUsers();
-		for (User u : users) {
-			u.setGamesPlayed(u.getGamesPlayed() + 1);
-			String[] guesses = game.getGuess().split(" ");
-			for (String g : guesses) {
-				if (g.equalsIgnoreCase(game.getWord())) {
-					u.setWins(u.getWins() + 1);
-				}
-				userRepository.save(u);
-			}
-		}
 		try {
 			EmailUtil.sendEmail(users.get(0).getEmail(), users.get(1).getUsername()
 					+ " has guessed, Checkout PicturePerfect to see if the guess is correct!");
@@ -63,8 +53,17 @@ public class GameServiceImpl implements GameService {
 			System.out.println("Email is not valid or can not be reached");
 		}
 		if (((Integer) game.getTurn()).equals(game.getUsers().get(1).getuId())) {
+			for (User u : users) {
+				u.setGamesPlayed(u.getGamesPlayed() + 1);
+				String[] guesses = game.getGuess().split(" ");
+				for (String g : guesses) {
+					if (g.equalsIgnoreCase(game.getWord())) {
+						u.setWins(u.getWins() + 1);
+					}
+					userRepository.save(u);
+				}
+			}
 			game.setTurn(game.getUsers().get(0).getuId());
-			System.out.println("Game turn: " + game.getTurn());
 		} else {
 			game.setTurn(-1);
 		}
