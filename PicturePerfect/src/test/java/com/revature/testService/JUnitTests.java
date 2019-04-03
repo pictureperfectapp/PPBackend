@@ -23,19 +23,22 @@ public class JUnitTests {
 
 	UserServiceImpl us= new UserServiceImpl();
 	GameServiceImpl gs= new GameServiceImpl();
-	User Andrew=new User("AndrewPlus", "123", "andrew@hshf.com", null, 0, 0,
+	User AndrewPlus=new User("AndrewPlus", "123", "andrew@hshf.com", null, 0, 0,
 			0);
 	Game game=new Game();
 	List<Game> gameList= new ArrayList();
 
 		@Test
 		public void testGetUserById() {
-			assertEquals(Andrew, us.getUserById(1952));
+			assertEquals(AndrewPlus, us.getUserById(1952));
 		}
 		
 		@Test
 		public void testGetUserByUsername() {
-			assertEquals( Andrew, us.getUserByUsername("Andrew"));
+			assertEquals( "AndrewPlus", us.getUserByUsername("AndrewPlus").getUsername());
+			System.out.println("Test");
+		
+			System.out.println(us.getUserByUsername("AndrewPlus"));
 		}
 		
 		@Test

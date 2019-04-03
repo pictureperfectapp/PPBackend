@@ -17,31 +17,52 @@ public class LoggingAspect {
 	private static Logger log = Logger.getRootLogger();
 	
 	
-	@AfterThrowing("within(com.revature.services)")
+	@AfterThrowing("within(com.revature.services.UserServiceImpl)")
 	public void logAfterExceptionUS(JoinPoint jp) {
 		log.error(jp.getSignature()+ " threw an exception");
 	}
-	
-	@AfterThrowing("within(com.revature.controllers)")
+	@AfterThrowing("within(com.revature.services.GameServiceImpl)")
 	public void logAfterExceptionGS(JoinPoint jp) {
 		log.error(jp.getSignature()+ " threw an exception");
 	}
+	@AfterThrowing("within(com.revature.services.ImageService)")
+	public void logAfterExceptionIS(JoinPoint jp) {
+		log.error(jp.getSignature()+ " threw an exception");
+	}
+	
+	@AfterThrowing("within(com.revature.controllers.UserController)")
+	public void logAfterExceptionUC(JoinPoint jp) {
+		log.error(jp.getSignature()+ " threw an exception");
+	}
+		@AfterThrowing("within(com.revature.controllers.GameController)")
+		public void logAfterExceptionGC(JoinPoint jp) {
+			log.error(jp.getSignature()+ " threw an exception");
+	}
+		@AfterThrowing("within(com.revature.controllers.ImageController)")
+		public void logAfterExceptionIC(JoinPoint jp) {
+			log.error(jp.getSignature()+ " threw an exception");
+		}
+		@AfterThrowing("within(com.revature.controllers.LoginController)")
+		public void logAfterExceptionLC(JoinPoint jp) {
+			log.error(jp.getSignature()+ " threw an exception");
+		}
 	@AfterThrowing("within(com.revature.util.EmailUtil)")
 	public void logAfterExceptionEmail(JoinPoint jp) {
 		log.error(jp.getSignature()+ " threw an exception");
 	}
-	
-	@AfterThrowing("within(com.revature.repositories)")
-	public void logAfterExceptionRepo(JoinPoint jp) {
-		log.error(jp.getSignature()+ " threw an exception");
-		
-	}
-	@After("execution(User createUser(.))")
+//	
+//	@AfterThrowing("within(com.revature.repositories)")
+//	public void logAfterExceptionRepo(JoinPoint jp) {
+//		log.error(jp.getSignature()+ " threw an exception");
+//		
+//	}
+	@After("execution( * createUser(..))")
 	public void logWhenUsersAreCreated(JoinPoint jp) {
-		log.info("A user was created.");
+	User u = (User) jp.getTarget();
+		log.info(u.getUsername() + " made an account.");
 	}
 	
-	@After("execution(User deleteUser(.))")
+	@After("execution(void deleteUser(..))")
 	public void logWhenUserIsDeleted(JoinPoint jp) {
 		log.info(jp.getSignature().getName() + " was deleted.");
 	}
