@@ -21,13 +21,15 @@ public class UserServiceImpl implements UserService{
     }
     @Override
     public User createUser(User user) {
+    	user.setGamesPlayed(0);
+    	user.setPoints(0);
+    	user.setWins(0);
         return userRepository.save(user);
     
     }
     @Override
     public User updateUser(User user) {
-        userRepository.delete(user);
-        return user;
+        return userRepository.save(user);
     }
     @Override
     public void deleteUser(User user) {

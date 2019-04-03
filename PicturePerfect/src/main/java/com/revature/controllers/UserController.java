@@ -55,11 +55,23 @@ public class UserController {
     
     @PutMapping("/{id}")
     public ResponseEntity<User> updateUser(@PathVariable("id") Integer id, @Valid @RequestBody User user) {
+    	System.out.println("Updating user");
         List<User> users = userService.getAllUsers();
         for(User u : users) {
-            if(u.getuId()==id) {
-                // then we want to update that record
-                user.setuId(id);
+            if(u.getuId().equals(id)) {
+            	user.setPoints(u.getPoints());
+            	user.setWins(u.getWins());
+            	user.setGamesPlayed(u.getGamesPlayed());
+            	if(user.getEmail() == null || user.getEmail().equals("")) {
+            		user.setEmail(u.getEmail());
+            	}
+            	if(user.getUsername() == null || user.getUsername().equals("")) {
+            		user.setUsername(u.getUsername());
+            	}
+            	if(user.getPassword() == null || user.getPassword().equals("")) {
+            		user.setPassword(u.getPassword());
+            	}
+            	System.out.println(user);
                 return new ResponseEntity<>(userService.updateUser(user),HttpStatus.OK);
             }
         }

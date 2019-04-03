@@ -13,13 +13,13 @@ import com.revature.repositories.UserRepository;
 import com.revature.util.EmailUtil;
 
 @Service
-public class GameServiceImpl implements GameService{
+public class GameServiceImpl implements GameService {
 
 	@Autowired
 	GameRepository gameRepository;
 	@Autowired
 	UserRepository userRepository;
-	
+
 	@Override
 	public List<Game> findAllGames() {
 		return gameRepository.findAll();
@@ -33,30 +33,31 @@ public class GameServiceImpl implements GameService{
 	@Override
 	public Game addGame(Game game) {
 		List<User> users = game.getUsers();
-		
+
 		try {
-			EmailUtil.sendEmail(users.get(1).getEmail(), "You Recieved an Image to Guess from : " + users.get(0).getUsername());
+			EmailUtil.sendEmail(users.get(1).getEmail(),
+					"You Recieved an Image to Guess from : " + users.get(0).getUsername());
 		} catch (Exception e) {
 			System.out.println("Email not valid or can not be reached");
 		}
 		game.setGuess("NEED TO GUESS");
-//		game.setTurn(1);
 		return gameRepository.save(game);
 	}
 
 	@Override
 	public Game updateGame(Game game) {
-		//Update turns
-		game.setTurn(game.getTurn() + 1);
+		game.setTurn(-1);
 		List<User> users = game.getUsers();
-		if(game.getTurn() == 2) {	
+		if (game.getTurn() == -1) {
 			try {
-				EmailUtil.sendEmail(users.get(0).getEmail(), users.get(1).getUsername() + " has guessed, Checkout PicturePerfect to see if the guess is correct!");
-				if(game.getGuess() == game.getWord()) {
-					for(User u : users) {
-						u.setWins(u.getWins()+1);
-						userRepository.save(u);
+				EmailUtil.sendEmail(users.get(0).getEmail(), users.get(1).getUsername()
+						+ " has guessed, Checkout PicturePerfect to see if the guess is correct!");
+				for (User u : users) {
+					u.setGamesPlayed(u.getGamesPlayed() + 1);
+					if (game.getGuess().equals("correct")) {
+						u.setWins(u.getWins() + 1);
 					}
+					userRepository.save(u);
 				}
 			} catch (Exception e) {
 				System.out.println("Email is not valid or can not be reached");
@@ -72,7 +73,7 @@ public class GameServiceImpl implements GameService{
 	}
 
 	@Override
-	public List<Game> findGamesByTurn(Integer id){
+	public List<Game> findGamesByTurn(Integer id) {
 		List<Game> allGames = gameRepository.findGamesByTurn(id);
 //		List<Game> resumable = new ArrayList<Game>();
 //		for(Game g : allGames) {
@@ -82,7 +83,5 @@ public class GameServiceImpl implements GameService{
 //		}
 		return allGames;
 	}
-
-
 
 }
