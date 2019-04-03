@@ -10,6 +10,5 @@ import com.revature.models.Game;
 
 @Repository
 public interface GameRepository extends JpaRepository<Game, Integer>{
-	
-	public List<Game> findGamesByTurn(Integer id);
+	public List<Game> findByUsers_uId(Integer id);
 }
