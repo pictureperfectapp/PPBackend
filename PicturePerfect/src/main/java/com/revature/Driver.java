@@ -12,7 +12,7 @@ import com.amazonaws.services.appstream.model.Application;
 		
 		@Override
 		protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-			return application.sources(Application.class);
+			return application.sources(Driver.class);
 		}
 		
 		public static void main(String[] args) {
