@@ -59,12 +59,12 @@ public class LoggingAspect {
 	@After("execution( * createUser(..))")
 	public void logWhenUsersAreCreated(JoinPoint jp) {
 	User u = (User) jp.getTarget();
-		log.info(u.getUsername() + " made an account.");
+		log.info("An acount was made");
 	}
 	
 	@After("execution(void deleteUser(..))")
 	public void logWhenUserIsDeleted(JoinPoint jp) {
-		log.info(jp.getSignature().getName() + " was deleted.");
+		log.info("An account  was deleted.");
 	}
 	
 }
