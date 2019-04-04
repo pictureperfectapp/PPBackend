@@ -1,6 +1,9 @@
 package com.revature.services;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,12 +35,25 @@ public class GameServiceImpl implements GameService {
 	@Override
 	public Game addGame(Game game) {
 		List<User> users = game.getUsers();
-		try {
-			EmailUtil.sendEmail(users.get(1).getEmail(),
-					"You Received an Image to Guess from : " + users.get(0).getUsername());
-		} catch (Exception e) {
-			System.out.println("Email not valid or can not be reached");
-		}
+//		try {
+//			EmailUtil.sendEmail(users.get(1).getEmail(),
+//					"You Received an Image to Guess from : " + users.get(0).getUsername());
+//		} catch (Exception e) {
+//			System.out.println("Email not valid or can not be reached");
+//		}
+		ExecutorService emailExecutor = Executors.newSingleThreadExecutor();
+        emailExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                	EmailUtil.sendEmail(users.get(1).getEmail(),
+        					"You Received an Image to Guess from : " + users.get(0).getUsername());
+                } catch (Exception e) {
+                	System.out.println("Email is not valid or can not be reached");
+                }
+            }
+        });
+        emailExecutor.shutdown();
 		game.setGuess("NEED TO GUESS");
 		return gameRepository.save(game);
 	}
@@ -46,12 +62,26 @@ public class GameServiceImpl implements GameService {
 	public Game updateGame(Game game) {
 
 		List<User> users = game.getUsers();
-		try {
-			EmailUtil.sendEmail(users.get(0).getEmail(), users.get(1).getUsername()
-					+ " has guessed, Checkout PicturePerfect to see if the guess is correct!");
-		} catch (Exception e) {
-			System.out.println("Email is not valid or can not be reached");
-		}
+//		try {
+//			EmailUtil.sendEmail(users.get(0).getEmail(), users.get(1).getUsername()
+//					+ " has guessed, Checkout PicturePerfect to see if the guess is correct!");
+//		} catch (Exception e) {
+//			System.out.println("Email is not valid or can not be reached");
+//		}
+		
+		ExecutorService emailExecutor = Executors.newSingleThreadExecutor();
+        emailExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                	EmailUtil.sendEmail(users.get(0).getEmail(), users.get(1).getUsername()
+                			+ " has guessed, Checkout PicturePerfect to see if the guess is correct!");
+                } catch (Exception e) {
+                	System.out.println("Email is not valid or can not be reached");
+                }
+            }
+        });
+        emailExecutor.shutdown();
 		if (((Integer) game.getTurn()).equals(game.getUsers().get(1).getuId())) {
 			for (User u : users) {
 				u.setGamesPlayed(u.getGamesPlayed() + 1);

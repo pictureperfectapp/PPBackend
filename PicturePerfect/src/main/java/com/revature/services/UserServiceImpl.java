@@ -52,6 +52,7 @@ public class UserServiceImpl implements UserService{
 			temp.setGamesPlayed(retrievedUser.getGamesPlayed());
 			temp.setPoints(retrievedUser.getPoints());
 			temp.setWins(retrievedUser.getWins());
+			temp.setAdmin(retrievedUser.getAdmin());
 		}
 		return temp;
 	}
