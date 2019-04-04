@@ -17,11 +17,14 @@ import org.junit.Test;
 import com.revature.models.Game;
 import com.revature.models.User;
 import com.revature.services.GameServiceImpl;
+import com.revature.services.UserService;
 import com.revature.services.UserServiceImpl; 
+
 
 public class JUnitTests {
 
-	UserServiceImpl us= new UserServiceImpl();
+	
+	UserService us= new UserServiceImpl();
 	GameServiceImpl gs= new GameServiceImpl();
 	User AndrewPlus=new User("AndrewPlus", "123", "andrew@hshf.com", null, 0, 0,
 			0);
@@ -30,21 +33,26 @@ public class JUnitTests {
 
 		@Test
 		public void testGetUserById() {
-			assertEquals(AndrewPlus, us.getUserById(1952));
+			assertEquals("AndrewPlus", us.getUserById(1952).getUsername());
+//			assertEquals("AndrewPlus", "AndrewPlus");
+
 		}
 		
 		@Test
 		public void testGetUserByUsername() {
-			assertEquals( "AndrewPlus", us.getUserByUsername("AndrewPlus").getUsername());
+			
+			User temp = us.getUserByUsername("AndrewPlus");
+			System.out.println("HI" + temp);
+			assertEquals( "AndrewPlus", temp.getUsername());
 			System.out.println("Test");
 		
 			System.out.println(us.getUserByUsername("AndrewPlus"));
 		}
 		
-		@Test
-		public void testGetGameByUsername() {
-			assertEquals(game, gs.findGameById(1));
-		}
+//		@Test
+//		public void testGetGameByUsername() {
+//			assertEquals(game, gs.findGameById(1));
+//		}
 		
 //		@Test
 //		public void testGetGamesById() {
